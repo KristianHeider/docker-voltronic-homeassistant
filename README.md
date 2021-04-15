@@ -1,6 +1,6 @@
 # A Docker based Home Assistant interface for MPP/Voltronic Solar Inverters 
 
-**Docker Hub:** [`bushrangers/ha-voltronic-mqtt:latest`](https://hub.docker.com/r/bushrangers/ha-voltronic-mqtt/)
+**Docker Hub:** [`KristianHeider/ha-voltronic-mqtt:latest`](https://hub.docker.com/r/bushrangers/ha-voltronic-mqtt/)
 
 ![License](https://img.shields.io/github/license/ned-kelly/docker-voltronic-homeassistant.svg) ![Docker Pulls](https://img.shields.io/docker/pulls/bushrangers/ha-voltronic-mqtt.png) ![buildx](https://github.com/ned-kelly/docker-voltronic-homeassistant/workflows/buildx/badge.svg)
 
@@ -50,23 +50,30 @@ It's pretty straightforward, just clone down the sources and set the configurati
 
 ```bash
 # Clone down sources on the host you want to monitor...
-git clone https://github.com/ned-kelly/docker-voltronic-homeassistant.git /opt/ha-inverter-mqtt-agent
+git clone https://github.com/KristianHeider/docker-voltronic-homeassistant.git /opt/ha-inverter-mqtt-agent
 cd /opt/ha-inverter-mqtt-agent
 
 # Configure the 'device=' directive (in inverter.conf) to suit for RS232 or USB.. 
-vi config/inverter.conf
+nano config/inverter.conf
 
 # Configure your MQTT server's IP/Host Name, Port, Credentials, HA topic, and name of the Inverter that you want displayed in Home Assistant...
 # If your MQTT server does not need a username/password just leave these values empty.
 
-vi config/mqtt.json
+nano config/mqtt.json
 ```
+
+Install mosquitto, overtake local IP
 
 Then, plug in your Serial or USB cable to the Inverter & stand up the container:
 
 ```bash
 docker-compose up -d
 
+```
+
+check:
+```
+docker exec -it voltronic-mqtt bash -c '/opt/inverter-cli/bin/inverter_poller -d -1'
 ```
 
 _**Note:**_
